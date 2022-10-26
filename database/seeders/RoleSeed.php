@@ -21,7 +21,7 @@ class RoleSeed extends Seeder
             ],
             [
                 'id'    => 2,
-                'title' => 'user',
+                'title' => 'agent',
             ],
         ];
 

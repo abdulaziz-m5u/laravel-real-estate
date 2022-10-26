@@ -15,18 +15,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
 Route::group(['middleware' => 'isAdmin','prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
+    
+    // user management
     Route::resource('permissions', \App\Http\Controllers\Admin\PermissionController::class);
-    Route::delete('permissions_mass_destroy', [\App\Http\Controllers\Admin\PermissionController::class, 'massDestroy'])->name('permissions.mass_destroy');
     Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
-    Route::delete('roles_mass_destroy', [\App\Http\Controllers\Admin\RoleController::class, 'massDestroy'])->name('roles.mass_destroy');
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
-    Route::delete('users_mass_destroy', [\App\Http\Controllers\Admin\UserController::class, 'massDestroy'])->name('users.mass_destroy');
+
+    // property management
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('properties', \App\Http\Controllers\Admin\PropertyController::class);
+    Route::resource('properties.features', \App\Http\Controllers\Admin\FeatureController::class);
+    Route::resource('properties.galleries', \App\Http\Controllers\Admin\GalleryController::class);
+    Route::resource('messages', \App\Http\Controllers\Admin\MessageController::class)->only('index','destroy');
 });
 
 Auth::routes();

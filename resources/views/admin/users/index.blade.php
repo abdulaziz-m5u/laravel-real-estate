@@ -15,19 +15,15 @@
                         <span class="icon text-white-50">
                             <i class="fa fa-plus"></i>
                         </span>
-                        <span class="text">{{ __('New user') }}</span>
                     </a>
                     @endcan
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover datatable datatable-User" cellspacing="0" width="100%">
+                    <table class="table table-bordered table-hover datatable datatable-User" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th width="10">
-
-                                </th>
                                 <th>No</th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
@@ -38,7 +34,6 @@
                         <tbody>
                             @forelse($users as $user)
                             <tr data-entry-id="{{ $user->id }}">
-                                <td></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
@@ -82,32 +77,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-  let deleteButtonTrans = 'delete selected'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.users.mass_destroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-      if (ids.length === 0) {
-        alert('zero selected')
-        return
-      }
-      if (confirm('are you sure ?')) {
-        $.ajax({
-          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'asc' ]],
     pageLength: 50,
   });
   $('.datatable-User:not(.ajaxTable)').DataTable({ buttons: dtButtons })

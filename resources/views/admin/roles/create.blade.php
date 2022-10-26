@@ -19,7 +19,7 @@
         <div class="card shadow">
             <div class="card-header">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">{{ __('create role') }}</h1>
+                    <h1 class="h3 mb-0 text-gray-800">{{ __('create data') }}</h1>
                     <a href="{{ route('admin.roles.index') }}" class="btn btn-primary btn-sm shadow-sm">{{ __('Go Back') }}</a>
                 </div>
             </div>

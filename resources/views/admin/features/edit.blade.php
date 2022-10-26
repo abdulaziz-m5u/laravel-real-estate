@@ -4,7 +4,6 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    
 
     @if($errors->any())
         <div class="alert alert-danger">
@@ -20,18 +19,19 @@
         <div class="card shadow">
             <div class="card-header">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">{{ __('create data') }}</h1>
-                    <a href="{{ route('admin.permissions.index') }}" class="btn btn-primary btn-sm shadow-sm">{{ __('Go Back') }}</a>
+                    <h1 class="h3 mb-0 text-gray-800">{{ __('edit data')}}</h1>
+                    <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-primary btn-sm shadow-sm">{{ __('Go Back') }}</a>
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.permissions.store') }}" method="POST">
+                <form action="{{ route('admin.properties.features.update', [$property->id,$feature->id]) }}" method="POST">
                     @csrf
+                    @method('put')
                     <div class="form-group">
-                        <label for="title">{{ __('Title') }}</label>
-                        <input type="text" class="form-control" id="title" placeholder="{{ __('Title') }}" name="title" value="{{ old('title') }}" />
+                        <label for="name">{{ __('Name') }}</label>
+                        <input type="text" class="form-control" id="name" placeholder="{{ __('Name') }}" name="name" value="{{ old('name', $feature->name) }}" />
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">{{ __('Save') }}</button>
+                    <button type="submit" class="btn btn-primary btn-block">{{ __('Save')}}</button>
                 </form>
             </div>
         </div>

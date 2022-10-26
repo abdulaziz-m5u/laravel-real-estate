@@ -35,6 +35,16 @@ class PermissionSeed extends Seeder
             [ 'title' => 'user_edit',],
             [ 'title' => 'user_view',],
             [ 'title' => 'user_delete',],
+            [ 'title' => 'category_access',],
+            [ 'title' => 'category_create',],
+            [ 'title' => 'category_edit',],
+            [ 'title' => 'category_view',],
+            [ 'title' => 'category_delete',],
+            [ 'title' => 'property_access',],
+            [ 'title' => 'property_create',],
+            [ 'title' => 'property_edit',],
+            [ 'title' => 'property_view',],
+            [ 'title' => 'property_delete',],
         ];
 
             Permission::insert($permissions);
