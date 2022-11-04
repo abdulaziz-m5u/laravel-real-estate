@@ -1,5 +1,7 @@
 # Laravel 9 - Real Estate Application
 
+![preview img](/preview.png)
+
 ## Run Locally
 
 Clone the project

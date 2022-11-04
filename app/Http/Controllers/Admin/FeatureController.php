@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Feature;
+use App\Models\Property;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Admin\ValidateFeatureRequest;
-use App\Models\Property;
 
 class FeatureController extends Controller
 {
@@ -23,6 +25,11 @@ class FeatureController extends Controller
 
     public function edit(Property $property, Feature $feature): View
     {
+        abort_if(Gate::denies('property_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if($property->agent->name != auth()->user()->name && auth()->user()->roles()->where('title', 'agent')->count() > 0){
+            abort(403);
+         }
+         
         return view('admin.features.edit', compact('feature', 'property'));
     }
 
@@ -38,6 +45,11 @@ class FeatureController extends Controller
 
     public function destroy(Property $property,Feature $feature): RedirectResponse
     {
+        abort_if(Gate::denies('property_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if($property->agent->name != auth()->user()->name && auth()->user()->roles()->where('title', 'agent')->count() > 0){
+            abort(403);
+         }
+
         $feature->delete();
 
         return back()->with([

@@ -31,13 +31,10 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 'unique:users,email,' . request()->route('user')->id,
             ],
-            'roles.*' => [
-                'integer',
-            ],
-            'roles'   => [
-                'required',
-                'array',
-            ],
+            'fax' => 'required',
+            'phone' => 'required',
+            'whatsapp' => 'required',
+            'profile' => 'required|image',
         ];
     }
 }

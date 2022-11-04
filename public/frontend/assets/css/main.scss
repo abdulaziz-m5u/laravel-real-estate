@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap');
+
+@mixin hero {
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 400;
+    z-index: 2;
+  }
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f6f6f6;
+}
+
+nav {
+  height: 80px;
+}
+
+ul.navbar-nav {
+  column-gap: 1.5rem;
+
+  li a {
+    font-size: 1.2rem;
+    &.active {
+      color: blue !important;
+    }
+    &:hover {
+      color: blue;
+    }
+  }
+}
+
+.hero {
+  @include hero;
+
+  &::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    position: absolute;
+  }
+}
+
+.category {
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 600;
+  }
+}
+
+.grid-custom {
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
+
+// detail page
+
+// properties
+.hero-property {
+  @include hero;
+  &::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50vh;
+    position: absolute;
+  }
+}

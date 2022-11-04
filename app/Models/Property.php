@@ -25,5 +25,12 @@ class Property extends Model
     {
         return $this->hasMany(Feature::class);
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
+
+
 

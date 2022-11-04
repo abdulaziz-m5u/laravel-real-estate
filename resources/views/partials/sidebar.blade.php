@@ -8,6 +8,8 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+
+            @can('user_management_access')
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ request()->is('admin/dashboard') || request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
@@ -17,6 +19,7 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
+
 
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -50,6 +53,29 @@
                     <i class="fas fa-envelope"></i>
                     <span>{{ __('Message') }}</span></a>
             </li>
+            @endcan
+
+        @if(auth()->user()->roles()->where('title', 'agent')->count() > 0)
+            @can('property_access')
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProperty" aria-expanded="true" aria-controls="collapseProperty">
+                    <i class="fas fa-home"></i>
+                    <span>{{ __('Property Management') }}</span>
+                </a>
+                <div id="collapseProperty" class="collapse" aria-labelledby="headingProperty" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ request()->is('admin/properties') || request()->is('admin/properties/*') ? 'active' : '' }}" href="{{ route('admin.properties.index') }}"> <i class="fa fa-briefcase mr-2"></i> {{ __('Property') }}</a>
+                    </div>
+                </div>
+            </li>
+            @endcan
+            <li class="nav-item {{ request()->is('admin/agents') || request()->is('admin/agents') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.agents.edit', auth()->id()) }}">
+                    <i class="fas fa-cog"></i>
+                    <span>{{ __('Update Profile') }}</span></a>
+            </li>
+        @endif
+
 
 
         </ul>

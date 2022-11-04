@@ -53,6 +53,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => 'required',
+            'fax' => 'required',
+            'whatsapp' => 'required',
+            'profile' => 'required|image'
         ]);
     }
 
@@ -64,10 +68,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $profile = request()->file('profile')->store('agents/profile', 'public');
+        
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
+            'fax' => $data['fax'],
+            'whatsapp' => $data['whatsapp'],
+            'profile' => $profile
         ]);
+
+         $user->roles()->sync(2);
+
+         return $user;
     }
 }

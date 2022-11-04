@@ -20,7 +20,6 @@
             <div class="card-header">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">{{ __('edit user')}}</h1>
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-primary btn-sm shadow-sm">{{ __('Go Back') }}</a>
                 </div>
             </div>
             <div class="card-body">
@@ -37,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">{{ __('Password') }}</label>
-                        <input type="text" class="form-control" id="password" placeholder="{{ __('Password') }}" name="password" value="{{ old('password',  $user->password) }}" />
+                        <input type="password" class="form-control" id="password" placeholder="{{ __('Password') }}" name="password"  />
                     </div>
                     <div class="form-group">
                         <label for="roles">{{ __('Role') }}</label>

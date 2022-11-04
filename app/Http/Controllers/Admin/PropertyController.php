@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Admin\ValidatePropertyRequest;
+use App\Models\User;
 
 class PropertyController extends Controller
 {
@@ -18,8 +19,11 @@ class PropertyController extends Controller
     public function index(): View
     {
         abort_if(Gate::denies('property_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
-        $properties = Property::all();
+        if(auth()->user()->roles()->where('title', 'agent')->count() > 0) {
+            $properties = Property::where('user_id', auth()->id())->get();
+        }else {
+            $properties = Property::all();
+        }
 
         return view('admin.properties.index', compact('properties'));
     }
@@ -39,7 +43,7 @@ class PropertyController extends Controller
 
         $slug = Str::slug($request->name, '-');
         
-        $property = Property::create($request->validated() + ['slug' => $slug]);
+        $property = Property::create($request->validated() + ['slug' => $slug, 'user_id' => auth()->id()]);
 
         return redirect()->route('admin.properties.edit', $property->id)->with([
             'message' => 'successfully created !',
@@ -57,7 +61,9 @@ class PropertyController extends Controller
     public function edit(Property $property): View
     {
          abort_if(Gate::denies('property_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-         
+         if($property->agent->name != auth()->user()->name && auth()->user()->roles()->where('title', 'agent')->count() > 0){
+            abort(403);
+         }
          $categories = Category::get();
 
         return view('admin.properties.edit', compact('property', 'categories'));
@@ -66,10 +72,10 @@ class PropertyController extends Controller
     public function update(ValidatePropertyRequest $request, Property $property): RedirectResponse
     {
         abort_if(Gate::denies('property_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+       
         $slug = Str::slug($request->name, '-');
 
-        $property->update($request->validated() + ['slug' => $slug]);
+        $property->update($request->validated() + ['slug' => $slug,'user_id' => auth()->id()]);
 
         return redirect()->route('admin.properties.index')->with([
             'message' => 'successfully updated !',
@@ -80,6 +86,9 @@ class PropertyController extends Controller
     public function destroy(Property $property): RedirectResponse
     {
         abort_if(Gate::denies('property_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if($property->agent->name != auth()->user()->name){
+            abort(403);
+         }
 
         $property->delete();
 

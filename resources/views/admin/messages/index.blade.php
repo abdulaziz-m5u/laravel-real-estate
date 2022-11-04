@@ -20,6 +20,7 @@
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Subject') }}</th>
                                 <th>{{ __('Message') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
